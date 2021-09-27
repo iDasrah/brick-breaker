@@ -1,5 +1,4 @@
-from pygame import Rect as PyRect
-from pygame import draw
+from consts import *
 
 from classes.Wall import *
 
@@ -23,13 +22,13 @@ class Brick(Wall):
             color (tuple/string, optional): couleur
         """
         if lives == 1:
-            color = '#41F063'
+            color = BRICK_COLORS[0]
         elif lives == 2:
-            color = '#416BF0'
+            color = BRICK_COLORS[1]
         elif lives == 3:
-            color = '#F0BA41'
+            color = BRICK_COLORS[2]
         else:
-            color = '#FA0801'
+            color = BRICK_COLORS[3]
         super().__init__(x, y, width, height, color, surface)
         self.lives = lives
 
@@ -61,13 +60,13 @@ class Brick(Wall):
         """
         if self.lives > 0:
             if self.lives == 1:
-                self.color = '#41F063'
+                self.color = BRICK_COLORS[0]
             elif self.lives == 2:
-                self.color = '#416BF0'
+                self.color = BRICK_COLORS[1]
             elif self.lives == 3:
-                self.color = '#F0BA41'
+                self.color = BRICK_COLORS[2]
             else:
-                self.color = '#FA0801'
+                self.color = BRICK_COLORS[3]
 
             self.draw()
         else:

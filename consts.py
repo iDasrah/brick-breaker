@@ -1,0 +1,27 @@
+from os import path
+
+SIZE = WIDTH, HEIGHT = 1000, 600
+
+FILEDIR = path.dirname(__file__)
+ASSETS_FOLDER = path.join(FILEDIR, 'assets/')
+STATS_FILE_PATH = path.join(FILEDIR, 'stats.json')
+CONFIG_FILE_PATH = path.join(FILEDIR, 'config.json')
+
+WALLS_COLOR = '#484B4C'
+WALLS_SIZES = [
+    [0, 0, 10, HEIGHT],
+    [WIDTH - 10, 0, 10, HEIGHT],
+    [0, 0, WIDTH, 10],
+]
+
+
+BUTTONS_WIDTH = 300
+BUTTONS_HEIGHT = 50
+
+BALL_COLOR = '#7FDFED'
+PUCK_COLOR = '#948F8F'
+BRICK_COLORS = ['#41F063', '#416BF0', '#F0BA41', '#FA0801']
+
+WIN_COLOR = "#17E06D"
+LOSE_COLOR = "#B90A0B"
+PLAY_BUTTON_COLOR = '#28E3CA'

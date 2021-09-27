@@ -1,6 +1,7 @@
 from os import path
 from random import randint
 
+from consts import *
 from pygame import Color, draw, mixer
 
 from classes.Rect import *
@@ -8,8 +9,8 @@ from classes.Rect import *
 mixer.init()
 
 # Chemins
-hit_path = 'assets/sounds/hit.wav'
-out_path = 'assets/sounds/out.wav'
+hit_path = path.join(ASSETS_FOLDER, 'sounds/hit.wav')
+out_path = path.join(ASSETS_FOLDER, 'sounds/out.wav')
 
 # Initialisation des sons
 hit_sfx = mixer.Sound(hit_path)

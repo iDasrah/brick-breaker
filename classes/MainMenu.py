@@ -1,5 +1,6 @@
-import json
+from os import path
 
+from consts import *
 from pygame import Rect as PyRect
 from pygame import display, draw, event, font, mouse
 
@@ -8,14 +9,11 @@ from classes.Game import *
 
 font.init()
 
-title_path = "assets/fonts/BubbleShine.ttf"
+title_path = path.join(ASSETS_FOLDER, 'fonts/BubbleShine.ttf')
 
 title_font = font.Font(title_path, 100)
 title = title_font.render('CASSE BRIQUE', True, '#000000')
 main_font = font.SysFont('Calibri', 30)
-
-BUTTONS_WIDTH = 300
-BUTTONS_HEIGHT = 50
 
 
 class MainMenu:
@@ -36,7 +34,7 @@ class MainMenu:
         self.config = config
         self.buttons = [
             Button(WIDTH // 2 - BUTTONS_WIDTH // 2, HEIGHT // 3,
-                   BUTTONS_WIDTH, BUTTONS_HEIGHT, main_font, 'JOUER', '#000000', '#28E3CA', self.surface, self.stats, self.config)
+                   BUTTONS_WIDTH, BUTTONS_HEIGHT, main_font, 'JOUER', '#000000', PLAY_BUTTON_COLOR, self.surface, self.stats, self.config)
         ]
 
     def show_stats(self):

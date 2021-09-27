@@ -1,6 +1,7 @@
 import json
 from os import path
 
+from consts import *
 from generators import *
 from pygame import Rect as PyRect
 from pygame import display, draw, event, font, image, mixer, time, transform
@@ -13,11 +14,9 @@ from classes.Puck import *
 font.init()
 
 # Chemins d'accès aux fichiers
-heart_path = 'assets/images/heart.png'
-win_sound_path = 'assets/sounds/win.wav'
-lose_sound_path = 'assets/sounds/lose.wav'
-stats_path = path.join(path.dirname(path.abspath('./prod')), 'stats.json')
-print(stats_path)
+heart_path = path.join(ASSETS_FOLDER, 'images/heart.png')
+win_sound_path = path.join(ASSETS_FOLDER, 'sounds/win.wav')
+lose_sound_path = path.join(ASSETS_FOLDER, 'sounds/lose.wav')
 
 # Chargement de l'image représentant le nombre de vies
 heart = image.load(heart_path)
@@ -52,9 +51,9 @@ class Game:
         self.walls = generate_walls(self.surface)
         self.bricks = generate_bricks(self.surface, self.config)
         self.ball = Ball(randint(10, WIDTH - 10),
-                         randint(250, HEIGHT - 100), 10, 2, 2, '#7FDFED', self, self.surface)
+                         randint(250, HEIGHT - 100), 10, 2, 2, BALL_COLOR, self, self.surface)
         self.puck = Puck(WIDTH // 2 - 50, HEIGHT - 30, 100, 20,
-                         '#948F8F', 6, 10, WIDTH - 10, 'LEFT', 'RIGHT', self.surface)
+                         PUCK_COLOR, 6, 10, WIDTH - 10, 'LEFT', 'RIGHT', self.surface)
         self.running = True
         self.counter = 3
         self.stats = stats
@@ -83,7 +82,7 @@ class Game:
         new_stats = json.dumps(
             {"wins": self.stats['wins'] + 1 if action == 'win' else self.stats['wins'], "loses": self.stats['loses'] + 1 if action == 'lose' else self.stats['wins'], "games": self.stats['games'] + 1}, indent=2)
 
-        stats_file = open(stats_path, 'w')
+        stats_file = open(STATS_FILE_PATH, 'w')
         stats_file.write(new_stats)
         stats_file.close()
 
@@ -95,7 +94,7 @@ class Game:
         self.ball.set_x(-100)
         win_sound.play()
         draw.rect(self.surface, '#ffffff', PyRect(0, 0, WIDTH, HEIGHT))
-        text = main_font.render('VICTOIRE !', True, "#17E06D")
+        text = main_font.render('VICTOIRE !', True, WIN_COLOR)
         self.surface.blit(text, (WIDTH // 2 - text.get_width() //
                           2, HEIGHT // 2 - text.get_height() // 2))
         display.flip()
@@ -112,7 +111,7 @@ class Game:
         self.ball.set_x(-100)
         lose_sound.play()
         draw.rect(self.surface, '#ffffff', PyRect(0, 0, WIDTH, HEIGHT))
-        text = main_font.render('DEFAITE :(', True, "#B90A0B")
+        text = main_font.render('DEFAITE :(', True, LOSE_COLOR)
         self.surface.blit(text, (WIDTH // 2 - text.get_width() //
                           2, HEIGHT // 2 - text.get_height() // 2))
         display.flip()
