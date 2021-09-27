@@ -8,7 +8,9 @@ from classes.Game import *
 
 font.init()
 
-title_font = font.Font('assets/fonts/BubbleShine.ttf', 100)
+title_path = "assets/fonts/BubbleShine.ttf"
+
+title_font = font.Font(title_path, 100)
 title = title_font.render('CASSE BRIQUE', True, '#000000')
 main_font = font.SysFont('Calibri', 30)
 
@@ -21,7 +23,7 @@ class MainMenu:
     Classe MainMenu, définit le menu principal.
     """
 
-    def __init__(self, surface, stats):
+    def __init__(self, surface, stats, config):
         """
         Constructeur de la classe MainMenu.
 
@@ -31,27 +33,27 @@ class MainMenu:
         """
         self.surface = surface
         self.stats = stats
+        self.config = config
         self.buttons = [
             Button(WIDTH // 2 - BUTTONS_WIDTH // 2, HEIGHT // 3,
-                   BUTTONS_WIDTH, BUTTONS_HEIGHT, main_font, 'JOUER', '#000000', '#28E3CA', self.surface, self.stats)
+                   BUTTONS_WIDTH, BUTTONS_HEIGHT, main_font, 'JOUER', '#000000', '#28E3CA', self.surface, self.stats, self.config)
         ]
 
     def show_stats(self):
         """
         Affiche les stats à l'écran
         """
-        stats_file = open(self.stats)
-        stats = json.load(stats_file)
 
-        wins = stats['wins']
-        defeats = stats['loses']
-        games = stats['games']
+        wins = self.stats['wins']
+        defeats = self.stats['loses']
+        games = self.stats['games']
 
         stats = {
             'Victoires': wins,
             'Défaites': defeats,
             'Parties': games
         }
+
         space_between = 100
         i = 1
         for key, value in stats.items():

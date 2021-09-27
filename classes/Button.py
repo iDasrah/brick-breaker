@@ -12,7 +12,7 @@ class Button(Rect):
     Hérite de la classe Rect.
     """
 
-    def __init__(self, x, y, width, height, font, text, text_color, button_color, surface, stats):
+    def __init__(self, x, y, width, height, font, text, text_color, button_color, surface, stats, config):
         """
         Constructeur de la classe Button.
 
@@ -36,6 +36,7 @@ class Button(Rect):
         self.button_text = font.render(self.text, True, self.text_color)
         self.surface = surface
         self.stats = stats
+        self.config = config
 
     def draw(self):
         """
@@ -58,7 +59,7 @@ class Button(Rect):
 
     def create_game(self):
         """
-        Créée une session Zde jeu.
+        Créée une session de jeu.
         """
-        game = Game(5, self.surface, self.stats)
+        game = Game(self.config['lives'], self.surface, self.stats, self.config)
         game.run()

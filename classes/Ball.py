@@ -7,9 +7,13 @@ from classes.Rect import *
 
 mixer.init()
 
+# Chemins
+hit_path = 'assets/sounds/hit.wav'
+out_path = 'assets/sounds/out.wav'
+
 # Initialisation des sons
-hit_sfx = mixer.Sound('assets/sounds/hit.wav')
-out_sfx = mixer.Sound('assets/sounds/out.wav')
+hit_sfx = mixer.Sound(hit_path)
+out_sfx = mixer.Sound(out_path)
 
 
 class Ball(Rect):

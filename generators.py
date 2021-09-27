@@ -6,10 +6,7 @@ from classes.Wall import *
 WIDTH = 1000
 HEIGHT = 600
 
-ROWS = 6
-LINES = 14
-BRICKS_WIDTH = (WIDTH - 20) // LINES
-BRICKS_HEIGHT = 30
+
 WALLS_COLOR = '#484B4C'
 WALLS_SIZES = [
     [0, 0, 10, HEIGHT],
@@ -18,7 +15,13 @@ WALLS_SIZES = [
 ]
 
 
-def generate_bricks(surface):
+def generate_bricks(surface, config):
+    ROWS = config['rows']
+    LINES = config['lines']
+
+    BRICKS_WIDTH = (WIDTH - 20) // LINES
+    BRICKS_HEIGHT = 30
+
     bricks = []
     y = -BRICKS_HEIGHT + 10
     for row in range(ROWS):

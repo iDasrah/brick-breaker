@@ -12,16 +12,23 @@ from classes.Puck import *
 # Initialisation de pygame.font
 font.init()
 
+# Chemins d'accès aux fichiers
+heart_path = 'assets/images/heart.png'
+win_sound_path = 'assets/sounds/win.wav'
+lose_sound_path = 'assets/sounds/lose.wav'
+stats_path = path.join(path.dirname(path.abspath('./prod')), 'stats.json')
+print(stats_path)
+
 # Chargement de l'image représentant le nombre de vies
-heart = image.load('assets/images/heart.png')
+heart = image.load(heart_path)
 heart = transform.scale(heart, (32, 32))  # Passage de 256x256 à 64*64
 
 # Chargement de la police d'écriture
 main_font = font.SysFont('Calibri', 200)
 
 # Chargement des sons du jeu
-win_sound = mixer.Sound('assets/sounds/win.wav')
-lose_sound = mixer.Sound('assets/sounds/lose.wav')
+win_sound = mixer.Sound(win_sound_path)
+lose_sound = mixer.Sound(lose_sound_path)
 
 
 class Game:
@@ -29,7 +36,7 @@ class Game:
     Classe Game, définit une session de jeu.
     """
 
-    def __init__(self, lives, surface, stats, config=None):
+    def __init__(self, lives, surface, stats, config):
         """
         Constructeur de la classe Game.
 
@@ -37,23 +44,20 @@ class Game:
             lives (int): nombre de vies de la partie
             surface (pygame.Surface): surface du jeu
             stats (string): statistiques de jeu
-            TODO: config (string): configuration 
+            config (string): configuration 
         """
         self.lives = lives
         self.surface = surface
+        self.config = config
         self.walls = generate_walls(self.surface)
-        self.bricks = generate_bricks(self.surface)
+        self.bricks = generate_bricks(self.surface, self.config)
         self.ball = Ball(randint(10, WIDTH - 10),
-                         randint(250, HEIGHT - 100), 10, 1, 1, '#7FDFED', self, self.surface)
+                         randint(250, HEIGHT - 100), 10, 2, 2, '#7FDFED', self, self.surface)
         self.puck = Puck(WIDTH // 2 - 50, HEIGHT - 30, 100, 20,
-                         '#948F8F', 3, 10, WIDTH - 10, 'LEFT', 'RIGHT', self.surface)
+                         '#948F8F', 6, 10, WIDTH - 10, 'LEFT', 'RIGHT', self.surface)
         self.running = True
         self.counter = 3
-        self.config = config
-        self.stats_path = stats
-        self.stats_file = open(self.stats_path)
-        self.stats = json.load(self.stats_file)
-        self.stats_file.close()
+        self.stats = stats
 
     def lose_life(self):
         """
@@ -79,9 +83,9 @@ class Game:
         new_stats = json.dumps(
             {"wins": self.stats['wins'] + 1 if action == 'win' else self.stats['wins'], "loses": self.stats['loses'] + 1 if action == 'lose' else self.stats['wins'], "games": self.stats['games'] + 1}, indent=2)
 
-        self.stats_file = open(self.stats_path, 'w')
-        self.stats_file.write(new_stats)
-        self.stats_file.close()
+        stats_file = open(stats_path, 'w')
+        stats_file.write(new_stats)
+        stats_file.close()
 
     def win(self):
         """
